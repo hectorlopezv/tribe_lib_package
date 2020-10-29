@@ -32,11 +32,11 @@ const MediaStream = Tracking.predictionModel.canvas_mediaStream();
    
 | Categories | Description | Option 
 |--|--|--|
-| Ultra low | Recommended for low-end mobile devices| 1
-| Low |  Recommended for mid-end mobile devices| 2
-| Medium | Recommended for computers with at least one intel pentium processor |3
-| High | Recommended for computers with at least one intel core i3 processor |4
-| Ultra| Recommended for computers with at least one intel core i5 processor |5
+| Ultra low | Recommended for low-end mobile devices| 0
+| Low |  Recommended for mid-end mobile devices| 1
+| Medium | Recommended for computers with at least one intel pentium processor |2
+| High | Recommended for computers with at least one intel core i3 processor |3
+| Ultra| Recommended for computers with at least one intel core i5 processor |4
 ```js
   const model_config_ultra_low = {architecture: "MobileNetV1", outputStride: 16, multiplier: 0.5, quantBytes: 2,};
   const model_config_low = { architecture: 'MobileNetV1', outputStride: 16, multiplier: 0.75, quantBytes: 2}; 
@@ -49,10 +49,9 @@ const MediaStream = Tracking.predictionModel.canvas_mediaStream();
 We can define the level of prediction
 |Categories  | Resolution |Option
 |--|--|--|
-| Low |  Minimum|1
-| Medium|  Average|2
-| High|  High|3
-| Ultra|  Ultra |4
+| Low |  Minimum|0
+| Medium|  Average|1
+| High|  High|2
 ```js
   const effect_config_precission_low = { flipHorizontal: false, internalResolution: 'low', segmentationThreshold: 0.7};
   const effect_config_precission_mid = { flipHorizontal: false, internalResolution: 'medium', segmentationThreshold: 0.7}; 
@@ -106,7 +105,7 @@ These are the effects, the magic of this library, you can define what effect use
 
 ## Authors :black_nib:
 
-**Hector Lopez** [Github](https://github.com/hectorlopezv)
-**Hugo Fernel** [Github](https://github.com/daviddlhz)
-**Jhonathan Angarita** [Github](https://github.com/JhonathanAlejandro01)
-**David De La Hoz** [Github](https://github.com/daviddlhz)
+**Hector Lopez** [Github](https://github.com/hectorlopezv)\
+**Hugo Fernel** [Github](https://github.com/daviddlhz)\
+**Jhonathan Angarita** [Github](https://github.com/JhonathanAlejandro01)\
+**David De La Hoz** [Github](https://github.com/daviddlhz)\
