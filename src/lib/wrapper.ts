@@ -16,6 +16,7 @@ export class VideoTracking {
     width: number;
     video_stream: MediaStream;
     predictionModel: Prediction;
+    settings: MediaTrackSettings;
 
     constructor(model_config_number: number, config_prediction_number:number, type_device_number:number, width, height, device_id_str?:string  ){
   
@@ -78,9 +79,7 @@ export class VideoTracking {
         const stream: MediaStream = await navigator.mediaDevices.getUserMedia(config_constrains);/*MediaStream Video*/
 
         this.deviceId = stream.getVideoTracks()[0].getCapabilities().deviceId;
-        this.frameRate = stream.getVideoTracks()[0].getCapabilities().frameRate.max;
-        this.height = stream.getVideoTracks()[0].getCapabilities().height.max;
-        this.width = stream.getVideoTracks()[0].getCapabilities().width.max;
+        this.settings = stream.getVideoTracks()[0].getSettings();
         this.VideoElement.srcObject = stream;/*SetVideo Stream Source*/ /*MediaStream Video*/
         this.video_stream = stream;
         return this.PromiseCreator();
@@ -131,6 +130,8 @@ export class Prediction {
     }
 
     canvas_mediaStream(fps:number):MediaStream{
+        
+        const ctx:CanvasRenderingContext2D = this.canvasElement.getContext('2d'); 
         const stream: MediaStream= this.canvasElement.captureStream(fps);
         return stream;
     }
