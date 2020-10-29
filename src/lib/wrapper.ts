@@ -279,6 +279,7 @@ export class Prediction {
             if(this.stop){
                 /*remove canvas If visible in the DOM*/
                 this.canvasElement.remove();
+                /*if the is  a loop running stop it*/
                 this.stop = false;/*making the object reusable*/
                 return;
             }

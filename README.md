@@ -103,11 +103,6 @@ const effect_config_precission_high = {
   internalResolution: 'high',
   segmentationThreshold: 0.7,
 };
-const effect_config_precission_ultra = {
-  flipHorizontal: false,
-  internalResolution: 'ultra',
-  segmentationThreshold: 0.7,
-};
 ```
 
 ### Type Of Devices
@@ -150,6 +145,7 @@ These are the effects, the magic of this library, you can define what effect use
 ```js
 Tracking.predictionModel.loop_(3);
 const MediaStream = Tracking.predictionModel.canvas_mediStream();
+Tracking.predictionModel.stopAnimationLoop();/*To Stop Loop*/
 ```
 
 #### Blur
@@ -159,6 +155,7 @@ const MediaStream = Tracking.predictionModel.canvas_mediStream();
 ```js
 Tracking.predictionModel.loop_(1, config_effect_bokek);
 const MediaStream = Tracking.predictionModel.canvas_mediaStream();
+Tracking.predictionModel.stopAnimationLoop();/*To Stop Loop*/
 ```
 
 #### Virtual Background
@@ -168,6 +165,7 @@ const MediaStream = Tracking.predictionModel.canvas_mediaStream();
 ```js
 Tracking.predictionModel.loop_(2, config_virtual_background);
 const MediaStream = Tracking.predictionModel.canvas_mediaStream();
+Tracking.predictionModel.stopAnimationLoop();/*To Stop Loop*/
 ```
 
 #### Blur Body Parts
@@ -203,6 +201,7 @@ const parts: partsbody = {
 };
 Tracking.predictionModel.loop_(4, config_blur_body_part);
 const MediaStream = Tracking.predictionModel.canvas_mediaStream();
+Tracking.predictionModel.stopAnimationLoop();/*To Stop Loop*/
 ```
 
 ```js
