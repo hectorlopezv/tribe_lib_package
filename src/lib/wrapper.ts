@@ -46,7 +46,6 @@ export class VideoTracking {
         this.model = this._load_model(this.selection_model_option);
         this.videoStream =  this.load_Video_stream(this.selection_type_device);
 
-
         this.canvasElemenet = this.createCanvas(width, height);
         this.VideoElement = this.createVideo(width, height);
         this.predictionModel = new Prediction (this.model, this.videoStream, this.canvasElemenet, this.selection_effect_option, width, height);
@@ -78,7 +77,6 @@ export class VideoTracking {
      
         const stream: MediaStream = await navigator.mediaDevices.getUserMedia(config_constrains);/*MediaStream Video*/
 
-        this.deviceId = stream.getVideoTracks()[0].getCapabilities().deviceId;
         this.settings = stream.getVideoTracks()[0].getSettings();
         this.VideoElement.srcObject = stream;/*SetVideo Stream Source*/ /*MediaStream Video*/
         this.video_stream = stream;
