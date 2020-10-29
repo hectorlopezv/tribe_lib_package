@@ -7,7 +7,7 @@
   "module": "build/module/index.js",
   "repository": "https://github.com/hectorlopezv/tribe_lib",
   "license": "MIT",
-  "keywords": [],
+  "keywords": ["Bodypix", "Tensorflowjs", "Segmentation"],
   "scripts": {
     "build": "run-p build:*",
     "build:main": "tsc -p tsconfig.json",
