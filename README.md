@@ -202,6 +202,7 @@ const parts: partsbody = {
   right_hand: 11,
   right_foot: 23,
 };
+const config_blur_body_part = { backgroundBlurAmount: 30, edgeBlurAmount: 2.1, faceBodyPartIdsToBlur: [0, 1] };
 Tracking.predictionModel.loop_(4, config_blur_body_part);
 const MediaStream = Tracking.predictionModel.canvas_mediaStream();
 Tracking.predictionModel.stopAnimationLoop();/*To Stop Loop*/
