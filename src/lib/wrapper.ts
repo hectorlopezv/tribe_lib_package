@@ -126,16 +126,6 @@ export class Prediction {
          this.height = height;
      }
      
-     async stream_properties_mediaStream(){
-        await this.make_prediction_load();/*if video is no loaded yet*/
-        const stream = <MediaStream>this.loaded_video.srcObject;
-        this.deviceId = stream.getVideoTracks()[0].getCapabilities().deviceId;
-        this.frameRate = stream.getVideoTracks()[0].getCapabilities().frameRate.max;
-        this.height = stream.getVideoTracks()[0].getCapabilities().height.max;
-        this.width = stream.getVideoTracks()[0].getCapabilities().width.max;
-
-        return [this.deviceId, this.frameRate, this.height, this.width ];    
-    }
     static addHTMLCanvas_Video(parentNode:HTMLElement, nodeToAdd:CanvasElement|HTMLVideoElement){
         parentNode.appendChild(nodeToAdd);
     }
