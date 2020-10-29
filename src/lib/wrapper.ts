@@ -279,10 +279,10 @@ export class Prediction {
             if(this.stop){
                 /*remove canvas If visible in the DOM*/
                 this.canvasElement.remove();
+                this.stop = false;/*making the object reusable*/
                 return;
             }
 
-            this.stop = false;/*for reusing the object*/
             if (type_prediciton == 1){/*Blur Background - - PersonSegmentation*/
                
                 const prediction_frame = await model_prediction.segmentPerson(loaded_video, config);
