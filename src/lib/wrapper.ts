@@ -166,8 +166,6 @@ export class Prediction {
         img.src = base64;
         
         /*Resize image to canvas*/
-        ctx.imageSmoothingEnabled = true;
-        ctx.imageSmoothingQuality = 'low';
         ctx.drawImage(img, 0, 0, img.width, img.height, /*source rectangle*/0,0, width, height);/*destination rectangle*/
         return ctx.getImageData(0, 0, width, height);   
     }
@@ -224,7 +222,7 @@ export class Prediction {
                                             videoData[i*4 + 2], 
                                             0]
         }
-        canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+        //canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
         const {  backgroundBlurAmount, edgeBlurAmount, flipHorizontal } = config;
         bodyPix.drawMask(canvas, videoElement, newImg, backgroundBlurAmount, edgeBlurAmount, flipHorizontal);    
     }
@@ -250,7 +248,7 @@ export class Prediction {
         const canvas:CanvasElement = canvasElement;
 
         /*Clean Canvas*/
-        canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+        //canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
         const newImg:ImageData = canvas.getContext('2d').createImageData(canvas.width, canvas.height);
         const newImgData = newImg.data;
 
@@ -278,7 +276,13 @@ export class Prediction {
         const {base64_img } = config;
     
         const loopping = async () =>{/*Loop for animation*/
-           
+            if(this.stop){
+                /*remove canvas If visible in the DOM*/
+                this.canvasElement.remove();
+                return;
+            }
+
+            this.stop = false;/*for reusing the object*/
             if (type_prediciton == 1){/*Blur Background - - PersonSegmentation*/
                
                 const prediction_frame = await model_prediction.segmentPerson(loaded_video, config);
@@ -301,11 +305,7 @@ export class Prediction {
                 this.blurBodyPart_(this.canvasElement, this.loaded_video, prediction_frameParts, config);
             }
             
-            if(this.stop){
-                /*remove canvas If visible in the DOM*/
-                this.canvasElement.remove();
-                return;
-            }
+
             window.requestAnimationFrame(loopping);/*Recursive call*/
        }
     loopping();/*Closure*/
