@@ -105,10 +105,10 @@ These are the effects, the magic of this library, you can define what effect use
 
 ## Authors :black_nib:
 
-**Hector Lopez** [Github](https://github.com/hectorlopezv)\
+**Hector Lopez** [Github](https://github.com/hectorlopezv)
 
-**Hugo Fernel** [Github](https://github.com/daviddlhz)\
+**Hugo Fernel** [Github](https://github.com/daviddlhz)
 
-**Jhonathan Angarita** [Github](https://github.com/JhonathanAlejandro01)\
+**Jhonathan Angarita** [Github](https://github.com/JhonathanAlejandro01)
 
 **David De La Hoz** [Github](https://github.com/daviddlhz)
