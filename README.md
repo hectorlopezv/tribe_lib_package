@@ -29,6 +29,9 @@ const Tracking = new VideoTracking(
   type_model_architecture,
   effect_config_type,
   type_of_device
+  width:number, 
+  height:number, 
+  device_id_str?:string
 );
 Tracking.predictionModel.loop_(type_prediciton, configEffect);
 const MediaStream = Tracking.predictionModel.canvas_mediaStream();
