@@ -29,21 +29,16 @@ export class VideoTracking {
             {  flipHorizontal: false, internalResolution: 'high', segmentationThreshold: 0.7},
             {  flipHorizontal: false, internalResolution: 'ultra', segmentationThreshold: 0.7}];
 
-
         this.type_of_device = [ { audio: false, video: { facingMode: "user", width: width, height: height }},//use in load_videoStream
             { audio: false, video: { facingMode: { exact: "environment" }, width: width, height: height }},
             { audio: false, video: {deviceId: device_id_str,  width: width, height: height }},
             { audio: false, video: { width:  width, height: height }}];
 
-
         this.selection_model_option =  this.model_architeture_options[model_config_number];
         this.selection_effect_option = this.effect_config_precission[config_prediction_number];
         this.selection_type_device = this.type_of_device[type_device_number];
-        
-        
         this.model = this._load_model(this.selection_model_option);
         this.videoStream =  this.load_Video_stream(this.selection_type_device);
-
         this.canvasElemenet = this.createCanvas(width, height);
         this.VideoElement = this.createVideo(width, height);
         this.predictionModel = new Prediction (this.model, this.videoStream, this.canvasElemenet, this.selection_effect_option, width, height);
@@ -69,7 +64,6 @@ export class VideoTracking {
     _load_model(config_model: ModelConfig): Promise<unknown> {
         return  bodyPix.load(config_model);
     }
-
 
     async load_Video_stream(config_constrains:typeDeviceConfig):Promise<HTMLVideoElement>{
      
@@ -125,6 +119,7 @@ export class Prediction {
     }
 
     canvas_mediaStream(fps:number):MediaStream{
+        const ctx:CanvasRenderingContext2D = this.canvasElement.getContext("2d");
         const stream: MediaStream= this.canvasElement.captureStream(fps);
         return stream;
     }
@@ -182,7 +177,6 @@ export class Prediction {
 
     async virtualBackground_(prediction:SemanticPersonSegmentation, canvasElement: CanvasElement, videoElement:HTMLVideoElement, config:effect_config, base64_img:string){
   
-
         const canvas:CanvasElement = canvasElement;
         const newImg:ImageData = canvas.getContext('2d').createImageData(this.width, this.height)
         const newImgData = newImg.data;
@@ -197,12 +191,9 @@ export class Prediction {
         //ImageData
         const {data: imgData} = await this.getImageData(this.width, this.height, base64_img);
 
-
         for (let i = 0; i < pixelLength; i++) {
 
             const [r, g, b, a] = [imgData[i*4], imgData[i*4 + 1], imgData[i*4 + 2], imgData[i*4 + 3]];
-
-
             [
                 newImgData[i*4], 
                 newImgData[i*4 +1],
@@ -214,7 +205,6 @@ export class Prediction {
                                             videoData[i*4 + 2], 
                                             0]
         }
-        canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
         const {  backgroundBlurAmount, edgeBlurAmount, flipHorizontal } = config;
         bodyPix.drawMask(canvas, videoElement, newImg, backgroundBlurAmount, edgeBlurAmount, flipHorizontal);    
     }
@@ -225,7 +215,6 @@ export class Prediction {
  
     async blurBodyPart_(canvasElement: CanvasElement, videoElement:HTMLVideoElement, personSegmentationParts:SemanticPartSegmentation,  config:effect_config) {
         /*Reference of Body Parts*/
-
         const {backgroundBlurAmount, edgeBlurAmount, flipHorizontal, faceBodyPartIdsToBlur} = config;
         await bodyPix.blurBodyPart(canvasElement, videoElement, personSegmentationParts, faceBodyPartIdsToBlur,
             backgroundBlurAmount, edgeBlurAmount, flipHorizontal);
@@ -240,7 +229,6 @@ export class Prediction {
         const canvas:CanvasElement = canvasElement;
 
         /*Clean Canvas*/
-        //canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
         const newImg:ImageData = canvas.getContext('2d').createImageData(canvas.width, canvas.height);
         const newImgData = newImg.data;
 
@@ -274,7 +262,7 @@ export class Prediction {
                 return;
             }
 
-            if (type_prediciton == 1){/*Blur Background - - PersonSegmentation*/
+            if (type_prediciton === 1){/*Blur Background - - PersonSegmentation*/
                
                 const prediction_frame = await model_prediction.segmentPerson(loaded_video, config);
                 this.effect_blur_background(this.canvasElement, this.loaded_video, prediction_frame,  config);
