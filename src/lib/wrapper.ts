@@ -206,6 +206,7 @@ export class Prediction {
                                             videoData[i*4 + 2], 
                                             0]
         }
+        this.canvasElement.getContext('2d').clearRect(0,0,this.width, this.height);
         const {  backgroundBlurAmount, edgeBlurAmount, flipHorizontal } = config;
         bodyPix.drawMask(canvas, videoElement, newImg, backgroundBlurAmount, edgeBlurAmount, flipHorizontal);    
     }

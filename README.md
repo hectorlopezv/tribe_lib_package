@@ -46,8 +46,7 @@ We can define 5 categories **_Ultra low_**, **_Low_**, **_Medium_**, **_High_**,
 | Ultra low  | Recommended for low-end mobile devices                              | 0      |
 | Low        | Recommended for mid-end mobile devices                              | 1      |
 | Medium     | Recommended for computers with at least one intel pentium processor | 2      |
-| High       | Recommended for computers with at least one intel core i3 processor | 3      |
-| Ultra      | Recommended for computers with at least one intel core i5 processor | 4      |
+| High       | Recommended for computers with at least one intel core i3 processor | 3 
 
 ```js
 const model_config_ultra_low = {
