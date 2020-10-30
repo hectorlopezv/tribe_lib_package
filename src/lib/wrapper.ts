@@ -120,6 +120,7 @@ export class Prediction {
 
     canvas_mediaStream(fps:number):MediaStream{
         const ctx:CanvasRenderingContext2D = this.canvasElement.getContext("2d");
+        console.log(ctx);
         const stream: MediaStream= this.canvasElement.captureStream(fps);
         return stream;
     }
