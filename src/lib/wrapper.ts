@@ -73,7 +73,7 @@ export class VideoTracking {
 
     async load_Video_stream(config_constrains:typeDeviceConfig):Promise<HTMLVideoElement>{
      
-        const stream: MediaStream = await navigator.mediaDevices.getUserMedia(config_constrains) ||navigator.webkitGetUserMedia(config_constrains) || navigator.mozGetUserMedia(config_constrains);
+        const stream: MediaStream = await navigator.mediaDevices.getUserMedia(config_constrains);
 
         this.VideoElement.srcObject = stream;/*SetVideo Stream Source*/ /*MediaStream Video*/
         this.video_stream = stream;
