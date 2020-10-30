@@ -32,7 +32,7 @@ export class VideoTracking {
 
         this.type_of_device = [ { audio: false, video: { facingMode: "user", width: width, height: height }},//use in load_videoStream
             { audio: false, video: { facingMode: { exact: "environment" }, width: width, height: height }},
-            { audio: false, video: {deviceId: device_id_str,  width: width, height:  height }},
+            { audio: false, video: {deviceId: device_id_str,  width: width, height: height }},
             { audio: false, video: { width:  width, height: height }}];
 
 
@@ -73,7 +73,7 @@ export class VideoTracking {
 
     async load_Video_stream(config_constrains:typeDeviceConfig):Promise<HTMLVideoElement>{
      
-        const stream: MediaStream = await navigator.mediaDevices.getUserMedia(config_constrains);/*MediaStream Video*/
+        const stream: MediaStream = await navigator.mediaDevices.getUserMedia(config_constrains) ||navigator.webkitGetUserMedia(config_constrains) || navigator.mozGetUserMedia(config_constrains);
 
         this.VideoElement.srcObject = stream;/*SetVideo Stream Source*/ /*MediaStream Video*/
         this.video_stream = stream;
@@ -214,7 +214,7 @@ export class Prediction {
                                             videoData[i*4 + 2], 
                                             0]
         }
-        //canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+        canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
         const {  backgroundBlurAmount, edgeBlurAmount, flipHorizontal } = config;
         bodyPix.drawMask(canvas, videoElement, newImg, backgroundBlurAmount, edgeBlurAmount, flipHorizontal);    
     }
