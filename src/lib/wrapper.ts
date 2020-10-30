@@ -11,14 +11,11 @@ export class VideoTracking {
     model:Promise<unknown>;
     videoStream: Promise<HTMLVideoElement>;
     deviceId: string;
-    frameRate: number;
-    height: number;
-    width: number;
-    video_stream: MediaStream;
     predictionModel: Prediction;
     settings: MediaTrackSettings;
+    video_stream: MediaStream;
 
-    constructor(model_config_number: number, config_prediction_number:number, type_device_number:number, width, height, device_id_str?:string  ){
+    constructor(model_config_number: number, config_prediction_number:number, type_device_number:number, width:number, height:number, device_id_str?:string  ){
   
         this.model_architeture_options = [{architecture: "MobileNetV1", outputStride: 16, multiplier: 0.5, quantBytes: 2,},//Use in load model
             { architecture: 'MobileNetV1', outputStride: 16, multiplier: 0.75, quantBytes: 2},
@@ -76,7 +73,6 @@ export class VideoTracking {
     async load_Video_stream(config_constrains:typeDeviceConfig):Promise<HTMLVideoElement>{
      
         const stream: MediaStream = await navigator.mediaDevices.getUserMedia(config_constrains);/*MediaStream Video*/
-
         this.settings = stream.getVideoTracks()[0].getSettings();
         this.VideoElement.srcObject = stream;/*SetVideo Stream Source*/ /*MediaStream Video*/
         this.video_stream = stream;
@@ -133,6 +129,7 @@ export class Prediction {
         const stream: MediaStream= this.canvasElement.captureStream(fps);
         return stream;
     }
+
 
      async videoImageData (width:number, height:number, videoElement:HTMLVideoElement):Promise<ImageData>{
         /*Create Canvas*/
@@ -305,7 +302,6 @@ export class Prediction {
                 this.blurBodyPart_(this.canvasElement, this.loaded_video, prediction_frameParts, config);
             }
             
-
             window.requestAnimationFrame(loopping);/*Recursive call*/
        }
     loopping();/*Closure*/
