@@ -1,3 +1,4 @@
+
 # Virtual Background Bodypix :computer:
 
 ## Description :page_facing_up:
@@ -221,7 +222,8 @@ const config_blur_body_part = {
   faceBodyPartIdsToBlur: [0, 1],
 };
 ```
-
+## More information about the model
+**Repo BodyPix:** [Github](https://github.com/tensorflow/tfjs-models/tree/master/body-pix)
 ## Authors :black_nib:
 
 **Hector Lopez** [Github](https://github.com/hectorlopezv)
