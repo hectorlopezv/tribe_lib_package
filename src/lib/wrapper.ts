@@ -418,7 +418,7 @@ export class Prediction {
 
     async loop_(type_prediciton:number, config_:effect_config){
         /**
-        * @desc Get the virtual background
+        * @desc Loop animation that use segmentation
         *
         * @param {Number} type_prediciton Type of prediction and segmentation.
         * @param {Object} config_ Conguration of effect.
