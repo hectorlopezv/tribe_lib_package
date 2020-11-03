@@ -1,5 +1,39 @@
+/*
+ * TribeLibPackage
+ * Copyright 2020
+ * Author: Kayman Lab
+ * All Rights Reserved.
+ * Use, reproduction, distribution, and modification of this code is subject to the terms and
+ * conditions of the MIT license, available at http://www.opensource.org/licenses/mit-license.php
+ *
+ */
+
+
 import * as bodyPix from '@tensorflow-models/body-pix';
+
+
 export class VideoTracking {
+
+   /**
+    * @desc --
+    * 
+    * @param {Array} model_architeture_options Differents options of models to use.
+    * @param {Array} effect_config_precission Types of segmentation.
+    * @param {Array} type_of_device Define the dimensions of the video, in addition to which camera to request in mobile.
+    * @param {Object} selection_model_option Save the model selected.
+    * @param {Object} selection_effect_option Save the effect selected.
+    * @param {Object} selection_type_device Save the type of device selected.
+    * @param {Object} canvasElemenet Containt a canvas element.
+    * @param {Object} VideoElement Containt a video element.
+    * @param {Object} model Containt the model load.
+    * @param {Object} VideoStream Containt a Promesis of a video tag.
+    * @param {String} deviceId Containt the id of the video device.
+    * @param {Number} frameRate Containt frame rate of the segmentation.
+    * @param {Object} video_stream Containt a MediaStream of video tag.
+    * @param {Object} predictionModel Save the prediction.
+    */
+    
+
     model_architeture_options: Array<ModelConfig>;
     effect_config_precission: Array<effect_config>;
     type_of_device: Array<typeDeviceConfig>;
@@ -12,7 +46,6 @@ export class VideoTracking {
     videoStream: Promise<HTMLVideoElement>;
     deviceId: string;
     frameRate: number;
-
     video_stream: MediaStream;
     predictionModel: Prediction;
 
@@ -46,6 +79,14 @@ export class VideoTracking {
     }
 
     createCanvas(width:number, height:number):CanvasElement {
+       /**
+        * @desc Create a canva element
+        * @param {number} width width of the canva.
+        * @param {number} height height of the canva.
+        *
+        * @return canva element
+        */
+
         const canvas: CanvasElement = <CanvasElement>document.createElement('canvas');
         canvas.setAttribute('width', String(width) );
         canvas.setAttribute('height', String(height) );
@@ -53,6 +94,14 @@ export class VideoTracking {
       }
 
     createVideo(width:number, height:number): HTMLVideoElement {
+       /**
+        * @desc Create a video element
+        * @param {number} width width of the video.
+        * @param {number} height height of the video.
+        *
+        * @return video element
+        */
+
         const video: HTMLVideoElement= document.createElement('video');
         video.setAttribute('autoplay','false');
         video.setAttribute('width', String(width) );
@@ -62,19 +111,37 @@ export class VideoTracking {
     }
 
     _load_model(config_model: ModelConfig): Promise<unknown> {
+       /**
+        * @desc Load the model with the configuration.
+        * @param {Object} config_model Configuration of model.
+        *
+        * @return Model loaded
+        */
+
         return  bodyPix.load(config_model);
     }
 
     async load_Video_stream(config_constrains:typeDeviceConfig):Promise<HTMLVideoElement>{
+       /**
+        * @desc Obtain the stream of the video element.
+        * @param {Object} config_constrains Configuration of model.
+        *
+        * @return a promise that load the video stream
+        */
      
         const stream: MediaStream = await navigator.mediaDevices.getUserMedia(config_constrains);
 
-        this.VideoElement.srcObject = stream;/*SetVideo Stream Source*/ /*MediaStream Video*/
+        this.VideoElement.srcObject = stream;
         this.video_stream = stream;
         return this.PromiseCreator();
     }
 
-    PromiseCreator (): Promise<HTMLVideoElement>{ /* Return Promise VideoElement when all data is loaded and ready  with certains dimensions*/
+    PromiseCreator (): Promise<HTMLVideoElement>{ /* Return */
+    /**
+     * @desc Set width and height in the video element
+     *
+     * @return a promise VideoElement when all data is loaded and ready  with certains dimensions
+     */
         return new Promise((resolve) => {
             this.VideoElement.onloadedmetadata = () => {
                 this.VideoElement.width = this.VideoElement.videoWidth;
