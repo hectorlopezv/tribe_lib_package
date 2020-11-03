@@ -1,5 +1,5 @@
 /*
- * TribeLibPackage
+ * Tribe Lib Package
  * Copyright 2020
  * Author: Kayman Lab
  * All Rights Reserved.
@@ -15,7 +15,7 @@ import * as bodyPix from '@tensorflow-models/body-pix';
 export class VideoTracking {
 
    /**
-    * @desc --
+    * @desc Class that contain all about how get a MediaStream.
     * 
     * @param {Array} model_architeture_options Differents options of models to use.
     * @param {Array} effect_config_precission Types of segmentation.
@@ -23,14 +23,15 @@ export class VideoTracking {
     * @param {Object} selection_model_option Save the model selected.
     * @param {Object} selection_effect_option Save the effect selected.
     * @param {Object} selection_type_device Save the type of device selected.
-    * @param {Object} canvasElemenet Containt a canvas element.
-    * @param {Object} VideoElement Containt a video element.
-    * @param {Object} model Containt the model load.
-    * @param {Object} VideoStream Containt a Promesis of a video tag.
-    * @param {String} deviceId Containt the id of the video device.
-    * @param {Number} frameRate Containt frame rate of the segmentation.
-    * @param {Object} video_stream Containt a MediaStream of video tag.
+    * @param {Object} canvasElemenet contains a canvas element.
+    * @param {Object} VideoElement contains a video element.
+    * @param {Object} model contains the model load.
+    * @param {Object} Video contains a Promesis of a video tag.
+    * @param {String} deviceId contains the id of the video device.
+    * @param {Number} frameRate contains frame rate of the segmentation.
+    * @param {Object} video_stream contains a MediaStream of video tag.
     * @param {Object} predictionModel Save the prediction.
+    *
     */
     
 
@@ -43,7 +44,7 @@ export class VideoTracking {
     canvasElemenet: CanvasElement; 
     VideoElement: HTMLVideoElement;
     model:Promise<unknown>;
-    videoStream: Promise<HTMLVideoElement>;
+    Video: Promise<HTMLVideoElement>;
     deviceId: string;
     frameRate: number;
     video_stream: MediaStream;
@@ -62,7 +63,7 @@ export class VideoTracking {
             {  flipHorizontal: false, internalResolution: 'high', segmentationThreshold: 0.7},
             {  flipHorizontal: false, internalResolution: 'ultra', segmentationThreshold: 0.7}];
 
-        this.type_of_device = [ { audio: false, video: { facingMode: "user", width: width, height: height }},//use in load_videoStream
+        this.type_of_device = [ { audio: false, video: { facingMode: "user", width: width, height: height }},//use in load_Video
             { audio: false, video: { facingMode: { exact: "environment" }, width: width, height: height }},
             { audio: false, video: {deviceId: device_id_str,  width: width, height: height }},
             { audio: false, video: { width:  width, height: height }}];
@@ -71,10 +72,10 @@ export class VideoTracking {
         this.selection_effect_option = this.effect_config_precission[config_prediction_number];
         this.selection_type_device = this.type_of_device[type_device_number];
         this.model = this._load_model(this.selection_model_option);
-        this.videoStream =  this.load_Video_stream(this.selection_type_device);
+        this.Video =  this.load_Video_stream(this.selection_type_device);
         this.canvasElemenet = this.createCanvas(width, height);
         this.VideoElement = this.createVideo(width, height);
-        this.predictionModel = new Prediction (this.model, this.videoStream, this.canvasElemenet, this.selection_effect_option, width, height);
+        this.predictionModel = new Prediction (this.model, this.Video, this.canvasElemenet, this.selection_effect_option, width, height);
 
     }
 
@@ -158,6 +159,25 @@ export class VideoTracking {
 }
 
 export class Prediction {
+
+    /**
+    * @desc Class that contain all about how get a prediction.
+    * 
+    * @param {Promise} loaded_model contains a model loaded.
+    * @param {Promise} videoMediaStream contains a MediaStream of video element.
+    * @param {Boolean} stop Stop the loop of segmentation.
+    * @param {Object} canvasElement constains the canvas element.
+    * @param {Object} canvas_stream contains a MediaStream of canvas element.
+    * @param {Object} loaded_video Contains the video.
+    * @param {Object} height height the video and canva element.
+    * @param {Object} width width the video and canva element.
+    * @param {String} deviceId Contains the id of the video device.
+    * @param {Number} frameRate Contains frame rate of the segmentation.
+    * @param {Object} selection_effect_option The option that contains the effect selected.
+    * @param {Object} model_prediction Save the prediction.
+    */
+
+
     loaded_model: Promise<unknown>;
     videoMediaStream: Promise<HTMLVideoElement>;
     stop: boolean;
@@ -185,7 +205,14 @@ export class Prediction {
         parentNode.appendChild(nodeToAdd);
     }
 
-    canvas_mediaStream(fps:number):MediaStream{
+    canvas_mediaStream(fps:number):MediaStream{  
+        /**
+        * @desc Get the MediaStream of the canva
+        * @param {Number} fps Frames per second
+        *
+        * @return the stream of canva
+        */
+
         const ctx:CanvasRenderingContext2D = this.canvasElement.getContext("2d");
         console.log(ctx);
         const stream: MediaStream= this.canvasElement.captureStream(fps);
@@ -193,12 +220,19 @@ export class Prediction {
     }
 
      async videoImageData (width:number, height:number, videoElement:HTMLVideoElement):Promise<ImageData>{
-        /*Create Canvas*/
+        /**
+        * @desc Get video data
+        * @param {Number} width width the video
+        * @param {Number} height height the video
+        * @param {Object} videoElement the video element
+        *
+        * @return the data of video
+        */
+    
         const canvas:CanvasElement = <CanvasElement>document.createElement('canvas');
         canvas.setAttribute('width', String(width) );
         canvas.setAttribute('height', String(height));
         
-        /*Write data To image*/
         const context:CanvasRenderingContext2D = canvas.getContext('2d');
         const img = videoElement;
         
@@ -208,29 +242,44 @@ export class Prediction {
     }
 
     async getImageData(width:number, height:number, base64:string): Promise<ImageData>{
-        
-        /*Create Image object*/
+        /**
+        * @desc Get image the video element
+        * @param {Number} width width the video
+        * @param {Number} height height the video
+        * @param {String} base64 --
+        *
+        * @return the data of image
+        */
+
         const canvas:CanvasElement = <CanvasElement>document.createElement('canvas');
         canvas.width = width;
         canvas.height = height;
         const ctx:CanvasRenderingContext2D = canvas.getContext('2d');
 
-        /*Create new image*/
         const img = new Image();
         img.crossOrigin = '';
         img.src = base64;
         
-        /*Resize image to canvas*/
-        ctx.drawImage(img, 0, 0, img.width, img.height, /*source rectangle*/0,0, width, height);/*destination rectangle*/
+        ctx.drawImage(img, 0, 0, img.width, img.height, 0,0, width, height);
         return ctx.getImageData(0, 0, width, height);   
     }
 
     stopAnimationLoop():boolean{
+        /**
+        * @desc Stop the segmentation in the canva
+        *
+        * @return The option of stop the segmentation.
+        */
+
         this.stop = true;
         return this.stop;
     }
 
     async make_prediction_load():Promise<void>{ 
+        /**
+        * @desc Load the model and Get the prediction
+        *
+        */
 
         if (typeof this.loaded_video === 'undefined'){
             this.loaded_video = await this.videoMediaStream;
@@ -239,12 +288,33 @@ export class Prediction {
     }
 
     async effect_blur_background(canvasElement:CanvasElement, image:HTMLVideoElement, personSegmentation:SemanticPersonSegmentation ,  config:effect_config):Promise<void> {
+        /**
+        * @desc Get the effect blur
+        *
+        * @param {Object} canvasElement the canvas element.
+        * @param {Object} image image data of video element.
+        * @param {Object} personSegmentation model segmentation.
+        * @param {Object} config configuration of effect blur.
+        *
+        * @return The prediction or segmentation of the person
+        */
+
         const {backgroundBlurAmount, edgeBlurAmount, flipHorizontal} = config; 
         await bodyPix.drawBokehEffect(canvasElement, image, personSegmentation, backgroundBlurAmount, edgeBlurAmount, flipHorizontal);
     }
 
     async virtualBackground_(prediction:SemanticPersonSegmentation, canvasElement: CanvasElement, videoElement:HTMLVideoElement, config:effect_config, base64_img:string){
-  
+        /**
+        * @desc Config the virtual background
+        *
+        * @param {Object} prediction Prediction of segmentation.
+        * @param {Object} canvasElement Canvas element.
+        * @param {Object} videoElement Video element.
+        * @param {Object} config Configuration of Virtual Background.
+        * @param {String} base64_img Image information.
+        *
+        */
+
         const canvas:CanvasElement = canvasElement;
         const newImg:ImageData = canvas.getContext('2d').createImageData(this.width, this.height)
         const newImgData = newImg.data;
@@ -279,10 +349,30 @@ export class Prediction {
     }
     
     async virtual_background(canvasElement: CanvasElement, videoElement:HTMLVideoElement, personSegmentation:SemanticPersonSegmentation,  config:effect_config, base64_img:string){
+        /**
+        * @desc Get the virtual background
+        *
+        * @param {Object} canvasElement Canvas element.
+        * @param {Object} videoElement Video element.
+        * @param {Object} personSegmentation Segmentation of model.
+        * @param {Object} config Configuration of Virtual Background.
+        * @param {String} base64_img Image information.
+        *
+        */
         await this.virtualBackground_(personSegmentation, canvasElement, videoElement, config, base64_img);
     }
  
     async blurBodyPart_(canvasElement: CanvasElement, videoElement:HTMLVideoElement, personSegmentationParts:SemanticPartSegmentation,  config:effect_config) {
+        /**
+        * @desc Get the Blur body parts effect
+        *
+        * @param {Object} canvasElement Canvas element.
+        * @param {Object} videoElement Video element.
+        * @param {Object} personSegmentation Segmentation of model.
+        * @param {Object} config Configuration of Virtual Background.
+        *
+        */
+        
         /*Reference of Body Parts*/
         const {backgroundBlurAmount, edgeBlurAmount, flipHorizontal, faceBodyPartIdsToBlur} = config;
         await bodyPix.blurBodyPart(canvasElement, videoElement, personSegmentationParts, faceBodyPartIdsToBlur,
@@ -290,6 +380,15 @@ export class Prediction {
     }
 
     async grayScale(canvasElement: CanvasElement, videoElement:HTMLVideoElement, personSegmentation:SemanticPersonSegmentation){
+        /**
+        * @desc Get gray scale effect
+        *
+        * @param {Object} canvasElement Canvas element.
+        * @param {Object} videoElement Video element.
+        * @param {Object} personSegmentation Segmentation of model.
+        *
+        */
+
         const {data:map} = personSegmentation;
         // Extracting video data
         const { data:imgData } = await this.videoImageData(this.width, this.height, videoElement);
@@ -318,6 +417,14 @@ export class Prediction {
     }
 
     async loop_(type_prediciton:number, config_:effect_config){
+        /**
+        * @desc Get the virtual background
+        *
+        * @param {Number} type_prediciton Type of prediction and segmentation.
+        * @param {Object} config_ Conguration of effect.
+        *
+        */
+
         await this.make_prediction_load();
         const loaded_video:HTMLVideoElement = this.loaded_video;
         const model_prediction = this.model_prediction;
