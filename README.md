@@ -84,7 +84,7 @@ const model_config_low = {
 const model_config_medium = {
   architecture: 'MobileNetV1',
   outputStride: 16,
-  multiplier: 0.75,
+  multiplier: 1,
   quantBytes: 2,
 };
 const model_config_high = {
