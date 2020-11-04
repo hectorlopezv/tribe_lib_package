@@ -37,6 +37,24 @@ const Tracking = new VideoTracking(
 Tracking.predictionModel.loop_(type_prediciton, configEffect);
 const MediaStream = Tracking.predictionModel.canvas_mediaStream();
 ```
+### How To Reuse Object
+if you want to reuse the VideoTracking object after initialazing it and starting a Loop  do the following.
+```js
+const Tracking = new VideoTracking(
+  type_model_architecture,
+  effect_config_type,
+  type_of_device
+  width:number, 
+  height:number, 
+  device_id_str?:string
+);
+Tracking.predictionModel.loop_(type_prediciton, configEffect);
+//Stop Actual Loop
+Tracking.predicitionModel.stopAnimationLoop();
+
+//start another desired Effect
+Tracking.predictionModel.loop_(typ_prediction_2, configEffect_2);
+```
 
 ### Models
 
@@ -89,6 +107,7 @@ We can define the level of prediction
 | Low | Minimum|0
 | Medium| Average|1
 | High| High|2
+| ultra| ultra|3
 
 ```js
 const effect_config_precission_low = {
@@ -104,6 +123,11 @@ const effect_config_precission_mid = {
 const effect_config_precission_high = {
   flipHorizontal: false,
   internalResolution: 'high',
+  segmentationThreshold: 0.7,
+};
+const effect_config_precission_high = {
+  flipHorizontal: false,
+  internalResolution: 'ultra',
   segmentationThreshold: 0.7,
 };
 ```
