@@ -49,11 +49,12 @@ const Tracking = new VideoTracking(
   device_id_str?:string
 );
 Tracking.predictionModel.loop_(type_prediciton, configEffect);
+
 //Stop Actual Loop
 Tracking.predicitionModel.stopAnimationLoop();
 
 //start another desired Effect
-Tracking.predictionModel.loop_(typ_prediction_2, configEffect_2);
+Tracking.predictionModel.loop_(type_prediction_2, configEffect_2);
 ```
 
 ### Models
